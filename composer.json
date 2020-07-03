@@ -1,0 +1,30 @@
+{
+    "name": "cblink/eleme-dispatch",
+    "description": "eleme dispatch SDK",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "jinjun",
+            "email": "757258777@qq.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "0.9.*|^8.5",
+        "mockery/mockery": "~7.0|^1.3",
+        "friendsofphp/php-cs-fixer": "^2.16"
+    },
+    "require": {
+        "hanson/foundation-sdk": "^2.0|^3.0",
+        "ext-json": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Cblink\\ElemeDispatch\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Cblink\\ElemeDispatch\\Tests\\": "tests/"
+        }
+    }
+}
