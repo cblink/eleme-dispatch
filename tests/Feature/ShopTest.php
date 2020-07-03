@@ -23,8 +23,18 @@ class ShopTest extends TestCase
 
     protected function setUp(): void
     {
-        $fileName = __DIR__ . '/../../baseConfig.php';
-        $config = include $fileName;
+        $config = [
+            'app_id' => 'app_id',
+            'secret_key' => 'secret_key',
+            'debug' => true,
+            'cache' => null,
+        ];
+
+        $fileName = __DIR__ . '/../../config/baseConfig1.php';
+
+        if (file_exists($fileName)){
+            $config = include $fileName;
+        }
 
         $this->elemeDispatch = new ElemeDispatch($config);
     }

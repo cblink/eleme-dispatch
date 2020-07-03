@@ -11,7 +11,7 @@ $ composer require cblink/eleme-dispatch -vvv
 
 ## Usage
 
-TODO
+composer require cblink/eleme-dispatch -vvv
 
 ## Contributing
 

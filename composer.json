@@ -26,5 +26,12 @@
         "psr-4": {
             "Cblink\\ElemeDispatch\\Tests\\": "tests/"
         }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Cblink\\ElemeDispatch\\LaravelServiceProvider"
+            ]
+        }
     }
 }
