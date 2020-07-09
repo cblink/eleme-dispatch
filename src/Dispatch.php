@@ -54,4 +54,12 @@ class Dispatch extends Api
         return $this->setPrefix('anubis-webapi/v2')->request('order/carrier_route', $data);
     }
 
+    /**
+     * 获取 token 信息
+     */
+    public function getToken()
+    {
+        return $this->getAccessToken();
+    }
+
 }

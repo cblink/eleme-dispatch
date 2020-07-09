@@ -10,8 +10,17 @@ $ composer require cblink/eleme-dispatch -vvv
 ```
 
 ## Usage
-
-composer require cblink/eleme-dispatch -vvv
+配置项
+$config = [
+              'app_id' => 'app_id',
+              'secret_key' => 'secret_key',
+              'debug' => true,  // 测试联调
+              'cache' =>  ''// 缓存
+          ];
+// delivery query         
+(new ElemeDispatch($config))->dispatch->deliveryQuery($data);
+// create eleme order
+(new ElemeDispatch($config))->order->createOrder($data);
 
 ## Contributing
 

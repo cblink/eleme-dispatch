@@ -74,7 +74,7 @@ class Api extends AbstractAPI
     {
         $this->app = $app;
 
-        $this->host = $this->app->getConfig('debug') ? 'https://exam-anubis.ele.me' : 'https://exam-anubis.ele.me';
+        $this->host = $this->app->getConfig('debug') ? 'https://exam-anubis.ele.me' : 'https://open-anubis.ele.me';
 
         $this->tokenUrl = $this->host.'/anubis-webapi/get_access_token';
 

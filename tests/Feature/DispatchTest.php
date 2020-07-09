@@ -29,7 +29,7 @@ class DispatchTest extends TestCase
             'cache' => null,
         ];
 
-        $fileName = __DIR__ . '/../../config/baseConfig1.php';
+        $fileName = __DIR__ . '/../../config/baseConfig.php';
 
         if (file_exists($fileName)){
             $config = include $fileName;

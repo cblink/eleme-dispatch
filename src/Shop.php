@@ -13,9 +13,8 @@ namespace Cblink\ElemeDispatch;
 class Shop extends Api
 {
     /**
-     * 创建订单.
+     * 门店创建.
      *
-     * @param $url
      * @param $data
      *
      * @return mixed|\Psr\Http\Message\ResponseInterface

@@ -9,8 +9,8 @@
  */
 
 return [
-    'app_id' => '',
-    'secret_key' => '',
+    'app_id' => 'app_id',
+    'secret_key' => 'secret_key',
     'debug' => true,
-    'cache' => new Doctrine\Common\Cache\FilesystemCache(sys_get_temp_dir()),
+    'cache' =>  new Doctrine\Common\Cache\FilesystemCache(sys_get_temp_dir()),
 ];
