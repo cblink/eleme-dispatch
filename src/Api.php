@@ -233,7 +233,10 @@ class Api extends AbstractAPI
      */
     public function setCache($expireTime)
     {
-        $lifeTime = intval(floor($expireTime / 1000) - time());
+        // 1. 获取创建时间
+        $createTime = intval(intval($expireTime / 1000) - 86400);
+        // 2. 创建时间 加上 12 小时 减去 当前时间 == 最准确的缓存时间
+        $lifeTime = $createTime + 43200 - time();
 
         $this->cache->save($this->app->getConfig('app_id').'_token', $this->token, $lifeTime);
     }
