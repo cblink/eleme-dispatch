@@ -224,6 +224,7 @@ class Api extends AbstractAPI
 
             $this->setCache(json_decode(strval($response->getBody()), true)['data']['expire_time']);
         }
+        return $this->token;
     }
 
     /**
