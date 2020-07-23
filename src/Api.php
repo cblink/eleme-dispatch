@@ -11,7 +11,6 @@
 namespace Cblink\ElemeDispatch;
 
 use Cblink\ElemeDispatch\Exceptions\InvalidConfigException;
-use Doctrine\Common\Cache\Cache;
 use Doctrine\Common\Cache\FilesystemCache;
 use Exception;
 use Hanson\Foundation\AbstractAPI;
@@ -78,9 +77,7 @@ class Api extends AbstractAPI
 
         $this->tokenUrl = $this->host.'/anubis-webapi/get_access_token';
 
-        $this->cache = ($this->app->getConfig('cache') && $this->app->getConfig('cache') instanceof Cache) ?
-            $this->app->getConfig('cache') :
-            (new FilesystemCache(sys_get_temp_dir()));
+        $this->cache = $this->app->getConfig('cache');
     }
 
     /**
@@ -201,8 +198,8 @@ class Api extends AbstractAPI
     public function getAccessToken()
     {
         // 如果缓存存在
-        if ($this->cache->fetch($this->app->getConfig('app_id').'_token')) {
-            $this->token = $this->cache->fetch($this->app->getConfig('app_id').'_token');
+        if ($this->cache->get($this->app->getConfig('app_id').'_token')) {
+            $this->token = $this->cache->get($this->app->getConfig('app_id').'_token');
         } else {
             $salt = mt_rand(1000, 9999);
 
@@ -239,7 +236,7 @@ class Api extends AbstractAPI
         // 2. 创建时间 加上 12 小时 减去 当前时间 == 最准确的缓存时间
         $lifeTime = $createTime + 43200 - time();
 
-        $this->cache->save($this->app->getConfig('app_id').'_token', $this->token, $lifeTime);
+        $this->cache->setex($this->app->getConfig('app_id').'_token', $lifeTime, $this->token);
     }
 
     /**

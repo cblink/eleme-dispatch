@@ -10,16 +10,22 @@
 
 namespace Cblink\ElemeDispatch;
 
+use Doctrine\Common\Cache\PredisCache;
+use Doctrine\Common\Cache\RedisCache;
+use Hanson\Foundation\Config;
 use Cblink\ElemeDispatch\Providers\DispatchService;
 use Cblink\ElemeDispatch\Providers\LoggerService;
 use Cblink\ElemeDispatch\Providers\OrderService;
 use Cblink\ElemeDispatch\Providers\ShopService;
+use Doctrine\Common\Cache\Cache;
+use Doctrine\Common\Cache\FilesystemCache;
 use Hanson\Foundation\Foundation;
 use Hanson\Foundation\Log;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Symfony\Component\HttpFoundation\Request;
 
 class ElemeDispatch extends Foundation
 {
@@ -32,9 +38,17 @@ class ElemeDispatch extends Foundation
 
     public function __construct($config)
     {
-        parent::__construct($config);
-        // 主动重新初始化日志
+        $this['config'] = function () use ($config) {
+            return new Config($config);
+        };
+
+        if ($this['config']->get('debug', false)) {
+            error_reporting(E_ALL);
+        }
+
+        $this->registerBase();
         $this->initializeLogger();
+        $this->registerProviders();
     }
 
     /**
@@ -86,4 +100,31 @@ class ElemeDispatch extends Foundation
 
         return 2;
     }
+
+
+    /**
+     * Register basic providers.
+     */
+    private function registerBase()
+    {
+        $this['request'] = function () {
+            return Request::createFromGlobals();
+        };
+
+        if (!empty($this['config']['cache'])) {
+            switch ($this['config']['cache']) {
+                case RedisCache::class:
+                    $this['cache'] = (new RedisCache())->setRedis($this['config']['cache']);
+                    break;
+                case PredisCache::class:
+                    $this['cache'] = (new PredisCache($this['config']['cache']));
+                    break;
+            }
+        } else {
+            $this['cache'] = function () {
+                return new FilesystemCache(sys_get_temp_dir());
+            };
+        }
+    }
+
 }
